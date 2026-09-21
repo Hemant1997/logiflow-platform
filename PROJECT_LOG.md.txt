@@ -1,0 +1,12 @@
+# LogiFlow - Daily Engineering Log
+
+## Day 1: Project Setup & Workspace Initialization
+- Status: Completed
+- Work Done:
+  - Initialized unified monorepo git repository.
+  - Generated Spring Boot 3 backend skeleton with Spring Data JPA, Web, Validation, Lombok, and MySQL Driver.
+  - Initialized React (Vite) frontend application.
+  - Created `logiflow_db` database instance in MySQL.
+  - Configure `application.yml` with DB credentials & JPA properties.
+  - Define core Java Enums (`Role`, `OrderStatus`).
+  - Create foundational JPA Entities (`User`, `Warehouse`, `Product`).
