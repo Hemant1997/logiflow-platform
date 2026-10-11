@@ -1,4 +1,4 @@
-package com.logiflow.backend.entity;
+package com.logiflow.backend.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
