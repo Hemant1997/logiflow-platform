@@ -1,0 +1,129 @@
+version: '3.8'
+
+services:
+  # Kafka and Zookeeper
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    networks:
+      - logiflow-network
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    networks:
+      - logiflow-network
+
+  # MySQL Databases
+  mysql-user:
+    image: mysql:8.0
+    container_name: mysql-user
+    environment:
+      MYSQL_ROOT_PASSWORD: hemant1997
+      MYSQL_DATABASE: user_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-user-data:/var/lib/mysql
+    networks:
+      - logiflow-network
+
+  mysql-order:
+    image: mysql:8.0
+    container_name: mysql-order
+    environment:
+      MYSQL_ROOT_PASSWORD: hemant1997
+      MYSQL_DATABASE: order_db
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-order-data:/var/lib/mysql
+    networks:
+      - logiflow-network
+
+  mysql-shipment:
+    image: mysql:8.0
+    container_name: mysql-shipment
+    environment:
+      MYSQL_ROOT_PASSWORD: hemant1997
+      MYSQL_DATABASE: shipment_db
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql-shipment-data:/var/lib/mysql
+    networks:
+      - logiflow-network
+
+  mysql-warehouse:
+    image: mysql:8.0
+    container_name: mysql-warehouse
+    environment:
+      MYSQL_ROOT_PASSWORD: hemant1997
+      MYSQL_DATABASE: warehouse_db
+    ports:
+      - "3309:3306"
+    volumes:
+      - mysql-warehouse-data:/var/lib/mysql
+    networks:
+      - logiflow-network
+
+  mysql-product:
+    image: mysql:8.0
+    container_name: mysql-product
+    environment:
+      MYSQL_ROOT_PASSWORD: hemant1997
+      MYSQL_DATABASE: product_db
+    ports:
+      - "3310:3306"
+    volumes:
+      - mysql-product-data:/var/lib/mysql
+    networks:
+      - logiflow-network
+
+  # Redis for caching
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - logiflow-network
+
+  # MailHog for local email testing
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - logiflow-network
+
+volumes:
+  mysql-user-data:
+  mysql-order-data:
+  mysql-shipment-data:
+  mysql-warehouse-data:
+  mysql-product-data:
+
+networks:
+  logiflow-network:
+    driver: bridge

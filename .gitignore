@@ -17,5 +17,8 @@ target/
 .env
 *.log
 
-# Microservices
-microservices/
+# Microservices build artifacts
+**/target/
+**/.mvn/
+**/mvnw
+**/mvnw.cmd
