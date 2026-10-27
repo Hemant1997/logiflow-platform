@@ -16,3 +16,6 @@ target/
 # Env and logs
 .env
 *.log
+
+# Microservices
+microservices/
