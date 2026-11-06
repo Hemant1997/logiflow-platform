@@ -19,6 +19,3 @@ target/
 
 # Microservices build artifacts
 **/target/
-**/.mvn/
-**/mvnw
-**/mvnw.cmd
