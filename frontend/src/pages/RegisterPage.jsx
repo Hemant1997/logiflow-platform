@@ -51,7 +51,7 @@ function RegisterPage() {
     setLoading(true);
     setApiError("");
     try {
-      await axiosInstance.post("/api/auth/register", {
+      await axiosInstance.post("/user-service/api/auth/register", {
         fullName: formData.fullName,
         email: formData.email,
         password: formData.password,

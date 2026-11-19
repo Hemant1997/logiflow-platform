@@ -5,9 +5,9 @@ spring:
   application:
     name: product-service
   datasource:
-    url: jdbc:mysql://localhost:3306/product_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3310/product_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
     username: root
-    password: root
+    password: hemant1997
   jpa:
     hibernate:
       ddl-auto: update
