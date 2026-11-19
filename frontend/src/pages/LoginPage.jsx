@@ -38,7 +38,7 @@ function LoginPage() {
     setLoading(true);
     setApiError("");
     try {
-      const res = await axiosInstance.post("/api/auth/login", {
+      const res = await axiosInstance.post("/user-service/api/auth/login", {
         email: formData.email,
         password: formData.password,
       });

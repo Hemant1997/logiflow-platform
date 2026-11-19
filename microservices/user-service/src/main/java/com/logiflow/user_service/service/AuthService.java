@@ -6,7 +6,7 @@ import com.logiflow.user_service.entities.Users;
 import com.logiflow.user_service.repo.UserRepository;
 import com.logiflow.user_service.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +22,9 @@ public class AuthService {
 
 
         Users user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("Invalid credentials"));
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+                .orElseThrow(() -> new BadCredentialsException("Invalid credentials"));
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
+            throw new BadCredentialsException("Invalid credentials");
         }
 
         String token = jwtUtil.generateToken(user.getEmail(), user.getRole().name());
